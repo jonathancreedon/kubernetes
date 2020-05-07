@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamer-deploy
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: streamer
+  minReadySeconds: 6
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: streamer
+    spec:
+      containers:
+      - name: streamer
+        image: jc1991/streamer:latest
+        ports:
+        - containerPort: 50051

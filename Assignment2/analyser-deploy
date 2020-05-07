@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analyser-deploy
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: analyser
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: analyser
+    spec:
+      containers:
+      - name: analyser
+        image: jc1991/analyser:latest
